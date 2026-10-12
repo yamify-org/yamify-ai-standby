@@ -10,9 +10,12 @@ Static, independently hosted recovery copy of the public `www.yamify.co` homepag
 
 ## Refresh procedure
 
-The GitHub Actions workflow refreshes the snapshot hourly and can also be run
-manually. It commits only when the public homepage changed. A failed or
-unreachable primary site never overwrites the last known-good standby.
+The sync workflow can refresh the snapshot on demand and commits only when the
+public homepage changed. A failed or unreachable primary site never overwrites
+the last known-good standby. Its hourly schedule is temporarily disabled while
+the GitHub organization Actions account is locked for billing, preventing a
+repeating failed-run notification. Restore the hourly cron after GitHub unlocks
+the account.
 
 For an operator refresh:
 
