@@ -1,19 +1,28 @@
-# Yamify.ai canonical handoff
+# Yamify.ai standby homepage
 
-Static GitHub Pages handoff from `yamify.ai` to the current public experience at `www.yamify.co`.
+Static, independently hosted recovery copy of the public `www.yamify.co` homepage.
 
 ## Purpose
 
-- Keeps TLS and a branded fallback link active on `yamify.ai`.
-- Sends visitors to the current homepage instead of maintaining a second copy that can drift.
-- Keeps `www.yamify.co` as the single canonical marketing URL and marks the handoff `noindex`.
+- Keeps a branded public page available if the primary GCP-hosted site is unavailable.
+- Uses `yamify.ai` as the custom domain.
+- Keeps `www.yamify.co` as the canonical marketing URL and is marked `noindex` to avoid duplicate-content indexing.
 
-## Release procedure
+## Refresh procedure
 
-1. Keep `CNAME` and `.nojekyll` intact.
-2. Commit and push to `main`; GitHub Pages deploys from the repository root.
-3. Verify `https://yamify.ai/` and `https://www.yamify.ai/` over TLS and confirm both land on `https://www.yamify.co/`.
+The GitHub Actions workflow refreshes the snapshot hourly and can also be run
+manually. It commits only when the public homepage changed. A failed or
+unreachable primary site never overwrites the last known-good standby.
+
+For an operator refresh:
+
+1. Run `node scripts/sync-homepage.mjs`.
+2. Verify `index.html` contains the current headline, canonical URL, and
+   `noindex,nofollow` directive.
+3. Commit and push to `main`; GitHub Pages deploys from the repository root.
+4. Verify `https://yamify.ai/` and `https://www.yamify.ai/` over TLS on desktop
+   and mobile.
 
 ## Rollback
 
-Revert the handoff commit to restore the previous static standby page. DNS does not need to change, and the production `yamify.co` DNS remains untouched.
+In GoDaddy DNS, restore the previous parked-domain A records and remove the GitHub Pages CNAME record. The production `yamify.co` DNS is never changed by this standby.
