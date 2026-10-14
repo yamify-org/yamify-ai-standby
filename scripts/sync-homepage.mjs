@@ -24,6 +24,10 @@ function collectAssets(text) {
   return [...new Set(text.match(/\/(?:_next\/static|svgs|images)\/[^"'\\<> )]+/g) ?? [])];
 }
 
+function collectRootAssets(text) {
+  return [...new Set(text.match(/\/(?:favicon\.ico|favicon-32x32\.png|icon-192\.png|icon-512\.png|apple-touch-icon\.png)/g) ?? [])];
+}
+
 await rm(path.join(root, "_next", "static"), { recursive: true, force: true });
 
 let html = await (await fetchRequired(`${source}/`)).text();
@@ -36,7 +40,10 @@ html = html
     "/images/stealth/yamify-stealth-logo.jpg",
   );
 
-const initialAssets = collectAssets(html).filter((asset) => !asset.startsWith("/_next/image"));
+const initialAssets = [
+  ...collectAssets(html).filter((asset) => !asset.startsWith("/_next/image")),
+  ...collectRootAssets(html),
+];
 const cssFiles = [];
 for (const asset of initialAssets) {
   const destination = await saveAsset(asset);
