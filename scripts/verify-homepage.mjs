@@ -7,7 +7,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const html = await readFile(path.join(root, "index.html"), "utf8");
 
 const required = [
-  "OpenAI-compatible inference for African regions",
+  "Open-model inference",
   'name="robots" content="noindex,nofollow"',
   'rel="canonical" href="https://www.yamify.co/"',
 ];
