@@ -7,7 +7,8 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const html = await readFile(path.join(root, "index.html"), "utf8");
 
 const required = [
-  "Open-model inference",
+  "Open models, served from Africa.",
+  'href="https://www.yamify.co/auth/sign-up"',
   'name="robots" content="noindex,nofollow"',
   'rel="canonical" href="https://www.yamify.co/"',
 ];
@@ -20,6 +21,10 @@ for (const marker of required) {
 
 for (const marker of forbidden) {
   if (html.toLowerCase().includes(marker)) throw new Error(`Forbidden homepage marker: ${marker}`);
+}
+
+if (/href="\/(?:auth|dashboard|apps|calculator|workload-profiler)(?:[/?#"])/.test(html)) {
+  throw new Error("A product route still points to the static yamify.ai domain");
 }
 
 const assets = [

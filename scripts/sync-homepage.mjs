@@ -40,6 +40,13 @@ html = html
     "/images/stealth/yamify-stealth-logo.jpg",
   );
 
+// yamify.ai is a static recovery mirror, so app routes must open the canonical
+// Yamify product instead of resolving to missing files on GitHub Pages.
+html = html.replace(
+  /(?<![\w:])"\/(?!_next\/|images\/|svgs\/|favicon(?:\.ico|-)|icon-|apple-touch-icon)([^"]*)"/g,
+  (_match, route) => `"https://www.yamify.co/${route}"`,
+);
+
 const initialAssets = [
   ...collectAssets(html).filter((asset) => !asset.startsWith("/_next/image")),
   ...collectRootAssets(html),
