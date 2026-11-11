@@ -7,7 +7,9 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const html = await readFile(path.join(root, "index.html"), "utf8");
 
 const required = [
-  "Open models, served from Africa.",
+  "Run AI. Pay 90% less.",
+  "AI infrastructure for African businesses.",
+  "Run open-source AI models and AI agents through Yamify.",
   'href="https://www.yamify.co/auth/sign-up"',
   'name="robots" content="noindex,nofollow"',
   'rel="canonical" href="https://www.yamify.co/"',
